@@ -1,5 +1,3 @@
-trait StringExtend {}
-
 #[cfg(test)]
 pub mod tests {
   use crate::str::StringExtend;
@@ -58,18 +56,18 @@ class Page extends React.Component {
 ReactDOM.render(<Page />, document.getElementById("root"));
 "#;
 
-    let transfrom_res = transform(
+    let transform_res = transform(
       source,
       TransformConfig {
         react_runtime: Some(false),
         babel_import: Some(vec![BabelImportConfig {
           from_source: "antd".to_string(),
-          replace_css: Some(RepalceCssConfig {
+          replace_css: Some(ReplaceCssConfig {
             ignore_style_component: None,
             replace_expr: "antd/es/{}/style/index.css".to_string(),
             lower: Some(true),
           }),
-          replace_js: Some(RepalceSpecConfig {
+          replace_js: Some(ReplaceSpecConfig {
             ignore_es_component: None,
             replace_expr: "antd/es/{}/index.js".to_string(),
             lower: Some(true),
@@ -81,13 +79,13 @@ ReactDOM.render(<Page />, document.getElementById("root"));
     )
     .unwrap();
     assert_eq!(
-      transfrom_res.code.compare_handle(),
+      transform_res.code.compare_handle(),
       target_code.to_string().compare_handle()
     );
   }
 
   #[test]
-  fn react_perfix_test() {
+  fn react_prefix_test() {
     let source = r#"
 import { useState } from "react";
 import { Button, Input} from "antd";
@@ -99,7 +97,7 @@ import { useState } from "react";
 import { Button, Input } from "antd";
 const a = 123;
 "#;
-    let transfrom_res = transform(
+    let transform_res = transform(
       source,
       TransformConfig {
         react_runtime: Some(true),
@@ -110,7 +108,7 @@ const a = 123;
     )
     .unwrap();
     assert_eq!(
-      format!("\n{}", transfrom_res.code).compare_handle(),
+      format!("\n{}", transform_res.code).compare_handle(),
       target_code.to_string().compare_handle()
     );
   }
@@ -123,14 +121,14 @@ import { Image } from "@byted-growth/luckycat-mobile";
 import { throttle } from "@byted-growth/luckycat-util";
 const a = 123;
     "#;
-    let transfrom_res = transform(
+    let transform_res = transform(
       source,
       TransformConfig {
         react_runtime: Some(false),
         babel_import: Some(vec![
           BabelImportConfig {
             from_source: "@byted-growth/luckycat-mobile".to_string(),
-            replace_css: Some(RepalceCssConfig {
+            replace_css: Some(ReplaceCssConfig {
               ignore_style_component: Some(vec![
                 "Image".to_string(),
                 "ConfigProvider".to_string(),
@@ -140,7 +138,7 @@ const a = 123;
                 .to_string(),
               lower: Some(false),
             }),
-            replace_js: Some(RepalceSpecConfig {
+            replace_js: Some(ReplaceSpecConfig {
               ignore_es_component: None,
               replace_expr: "@byted-growth/luckycat-mobile/es/{}/index.js".to_string(),
               lower: Some(false),
@@ -149,7 +147,7 @@ const a = 123;
           BabelImportConfig {
             from_source: "@byted-growth/luckycat-util".to_string(),
             replace_css: None,
-            replace_js: Some(RepalceSpecConfig {
+            replace_js: Some(ReplaceSpecConfig {
               ignore_es_component: None,
               replace_expr: "@byted-growth/luckycat-util/pure_es/{}/index.js".to_string(),
               lower: Some(false),
@@ -168,7 +166,7 @@ import { useState, useCallback, useEffect, Fragment } from "react";
 const a = 123;
 "#;
     assert_eq!(
-      transfrom_res.code.compare_handle(),
+      transform_res.code.compare_handle(),
       target_code.to_string().compare_handle()
     );
   }

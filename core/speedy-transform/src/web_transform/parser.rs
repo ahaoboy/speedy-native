@@ -1,6 +1,6 @@
 use crate::types::TransformConfig;
 use crate::web_transform::babel_import::transformstyle;
-use crate::web_transform::react::transform_perfixreact;
+use crate::web_transform::react::transform_prefix_react;
 use swc::config::SourceMapsConfig;
 use swc::{Compiler, TransformOutput};
 use swc_common::input::StringInput;
@@ -49,14 +49,14 @@ pub fn transform(
     return Err(err_msg);
   }
 
-  let module_reuslt = parser.parse_module();
-  if module_reuslt.is_err() {
-    return Err(module_reuslt.err().unwrap().into_kind().msg().to_string());
+  let module_result = parser.parse_module();
+  if module_result.is_err() {
+    return Err(module_result.err().unwrap().into_kind().msg().to_string());
   }
-  let mut module = module_reuslt.unwrap();
+  let mut module = module_result.unwrap();
 
   transformstyle(&mut module, &config);
-  transform_perfixreact(&mut module, &config, code);
+  transform_prefix_react(&mut module, &config, code);
 
   let swc_target: EsVersion;
   let target_ref = target.unwrap_or_else(|| "".to_string());

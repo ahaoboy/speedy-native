@@ -19,15 +19,15 @@ export interface TransformConfig {
 }
 export interface BabelImportConfig {
   fromSource: string;
-  replaceCss?: RepalceCssConfig | undefined | null;
-  replaceJs?: RepalceSpecConfig | undefined | null;
+  replaceCss?: ReplaceCssConfig | undefined | null;
+  replaceJs?: ReplaceSpecConfig | undefined | null;
 }
-export interface RepalceSpecConfig {
+export interface ReplaceSpecConfig {
   replaceExpr: string;
   ignoreEsComponent?: Array<string> | undefined | null;
   lower?: boolean | undefined | null;
 }
-export interface RepalceCssConfig {
+export interface ReplaceCssConfig {
   ignoreStyleComponent?: Array<string> | undefined | null;
   replaceExpr: string;
   lower?: boolean | undefined | null;

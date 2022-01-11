@@ -5,7 +5,7 @@ use swc_ecma_ast::{
   ImportDecl, ImportDefaultSpecifier, ImportSpecifier, ModuleDecl, ModuleItem, Str,
 };
 
-pub fn transform_perfixreact(
+pub fn transform_prefix_react(
   module: &mut swc_ecma_ast::Module,
   project_config: &TransformConfig,
   _origin_code: &str,

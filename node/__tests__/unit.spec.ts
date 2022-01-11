@@ -9,7 +9,7 @@ import {transform} from '../lib';
 import * as process from "process";
 
 describe('speedy_napi_cases', function speedyTest() {
-    it('babel_import_transfrom', async () => {
+    it('babel_import_transform', async () => {
         const code = `
 import React from "react";
 import ReactDOM from "react-dom";
@@ -56,7 +56,7 @@ class Page extends React.Component{
 
 ReactDOM.render(<Page / >, document.getElementById("root"));
         `;
-        console.time('babel_import_swc_transfrom');
+        console.time('babel_import_swc_transform');
         process.env["rsdebug"] = "info";
         const napi_res = transform.transformBabelImport(code, {
             reatRuntime: true,
@@ -76,13 +76,13 @@ ReactDOM.render(<Page / >, document.getElementById("root"));
                 },
             ]
         })
-        console.timeEnd('babel_import_swc_transfrom');
+        console.timeEnd('babel_import_swc_transform');
 
         // 执行同样的 babel 操作
-        console.time('babel_import_babeljs_transfrom');
+        console.time('babel_import_babeljs_transform');
 
         const babel_res = babel_impl_bableimport(code, 'antd', `antd/es/{}/style/index.css`);
-        console.timeEnd('babel_import_babeljs_transfrom');
+        console.timeEnd('babel_import_babeljs_transform');
 
         assert.equal(
             target_code.replace(/\ +/g, '').replace(/[\r\n]/g, ''),
